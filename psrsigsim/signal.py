@@ -8,7 +8,7 @@ import numpy as np
 import h5py
 # from astropy import units as u
 from . import PSS_plot
-
+from . import bokeh_plot
 
 class MetaData(object):
     """
@@ -150,6 +150,9 @@ class Signal(object):
     def filter_bank(self, **kwargs):
         return PSS_plot.filter_bank(self, **kwargs)
 
+    def bokeh_filter_bank(self, **kwargs):
+        return bokeh_plot.bokeh_filter_bank(self, **kwargs)
+    
     def profile_plot(self, **kwargs):
         return PSS_plot.profile_plot(self, **kwargs)
 

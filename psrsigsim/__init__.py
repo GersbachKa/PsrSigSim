@@ -15,5 +15,6 @@ from . import PSS_utils as utils
 from .PSS_plot import *
 from .scintillation import *
 from .simulate import Simulation
+from .bokeh_plot import *
 
 __all__ = ['Signal','Pulsar','ISM','utils','Telescope']
