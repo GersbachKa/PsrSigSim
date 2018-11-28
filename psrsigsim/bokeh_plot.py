@@ -19,21 +19,33 @@ def bokeh_filter_bank(signal_object, grid=False, N_pulses=1, start_time=0,
     time = len(signal_object.signal[0,:])
     stop_time = start_time + N_pulses * nBins_per_period * signal_object.TimeBinSize
     img = signal_object.signal[:,:stop_bin] #Better name later
-
-    fig = bplt.figure(plot_height=(10*img.shape[0]),plot_width=(10*img.shape[0]),
+    print(signal_object.first_freq)
+    print(signal_object.last_freq)
+    fig = bplt.figure(#plot_height=(400),plot_width=(400),
                       title='Filter Bank',
-                      x_range = [start_time,stop_time],
-                      y_range = [signal_object.first_freq, signal_object.last_freq],
+                      x_range = Range1d(start_time,stop_time),
+                      y_range = Range1d(signal_object.first_freq,signal_object.last_freq),
                       x_axis_label = 'Observation Time (ms)',
                       y_axis_label = 'Frequency (Mhz)')            #MODIFIED
-    #print(signal_object.last_freq)
-    #fig.x_range=Range1d(stop_time,start_time)
-    #fig.y_range=Range1d(signal_object.first_freq, signal_object.last_freq)
-    #img = signal_object.signal[:,:stop_bin] #Better name later
-    #fig.image(image=[np.flipud(img)], x=[0], y=[0], dw=[img.shape[0]], dh=[img.shape[1]])
-    fig.image(image=[np.flipud(img)], x=[0], y=[signal_object.first_freq], dw=[stop_time], dh=[signal_object.last_freq], palette='Plasma256')
-    #plt.imshow(signal_object.signal[:,:stop_bin],origin='left',cmap='plasma',aspect='auto',extent=Extent,**kwargs)
-    #plt.yticks([])
+    #fig = bplt.figure(plot_height=(10*img.shape[0]),plot_width=(10*img.shape[0]),
+    #                  title='Filter Bank',
+    #                  x_range = [start_time,stop_time],
+    #                  y_range = [signal_object.first_freq, signal_object.last_freq],
+    #                  x_axis_label = 'Observation Time (ms)',
+    #                  y_axis_label = 'Frequency (Mhz)')            #MODIFIED
+
+
+    #fig.image(image=[np.flipud(img)], x=[0], y=[signal_object.first_freq], dw=[stop_time], dh=[signal_object.last_freq], palette='Plasma256')
+    fig.image(image=[img], x=[0], y=[1400], dw=[stop_time], dh=[signal_object.last_freq], palette='Plasma256')
+
+
     if notebook:
+        fig.plot_height = 700
+        fig.plot_width = 700
+        fig.y_range = Range1d(signal_object.first_freq,signal_object.last_freq*2)
         output_notebook()
-    bplt.show(fig)
+        bplt.show(fig)
+    else:
+        fig.plot_height = 400
+        fig.plot_height = 700
+        return fig
